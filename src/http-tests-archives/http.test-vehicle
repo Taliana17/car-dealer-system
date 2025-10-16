@@ -1,0 +1,37 @@
+### Crear un nuevo vehículo
+
+POST http://localhost:3000/vehicles
+Content-Type: application/json
+Authorization: Bearer {{token}}  # opcional si ya tienes JWT habilitado
+
+{
+  "marca": "Toyota",
+  "modelo": "Corolla",
+  "color": "Blanco",
+  "kilometraje": 15000,
+  "estado": "disponible",
+  "fecha_ingreso": "2025-10-22",
+  "id_concesionario": "1"
+}
+
+### Obtener todos los vehículos
+GET http://localhost:3000/vehicles
+Authorization: Bearer {{token}}
+
+### Obtener un vehículo por ID
+GET http://localhost:3000/vehicles/1
+Authorization: Bearer {{token}}
+
+### Actualizar un vehículo por ID
+PATCH http://localhost:3000/vehicles/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "color": "Negro",
+  "estado": "vendido"
+}
+
+### Eliminar un vehículo por ID
+DELETE http://localhost:3000/vehicles/1
+Authorization: Bearer {{token}}

@@ -1,0 +1,33 @@
+### Crear una nueva venta
+POST http://localhost:3000/sales
+Content-Type: application/json
+
+{
+  "id_cliente": 1,
+  "id_concesionario": 1,
+  "numero_factura": "FAC-001",
+  "fecha_venta": "2025-10-24",
+  "id_empleado": 2,
+  "metodo_pago": "efectivo"
+}
+
+### Obtener todas las ventas
+GET http://localhost:3000/sales
+Accept: application/json
+
+### Obtener una venta por ID
+GET http://localhost:3000/sales/1
+Accept: application/json
+
+### Actualizar una venta por ID
+PATCH http://localhost:3000/sales/1
+Content-Type: application/json
+
+{
+  "metodo_pago": "tarjeta",
+  "numero_factura": "FAC-001-UPDATED"
+}
+
+### Eliminar una venta por ID
+DELETE http://localhost:3000/sales/1
+Accept: application/json
