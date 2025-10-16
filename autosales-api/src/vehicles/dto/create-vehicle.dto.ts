@@ -1,5 +1,8 @@
+// Importa los decoradores de validación desde class-validator
 import { IsString, IsNumber, IsUUID, IsOptional, IsIn, IsArray } from 'class-validator';
 
+// DTO (Data Transfer Object) para crear un nuevo vehículo
+// Define las reglas de validación para los datos que llegan al backend
 export class CreateVehicleDto {
   @IsString() vin: string;
   @IsString() brand: string;
@@ -20,3 +23,4 @@ export class CreateVehicleDto {
   @IsIn(['available', 'sold', 'reserved']) @IsOptional()
   status?: 'available' | 'sold' | 'reserved';
 }
+

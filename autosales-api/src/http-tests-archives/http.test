@@ -1,0 +1,140 @@
+### Crear un nuevo vehículo
+
+POST http://localhost:3000/vehicles
+Content-Type: application/json
+Authorization: Bearer {{token}}  # opcional si ya tienes JWT habilitado
+
+{
+  "marca": "Toyota",
+  "modelo": "Corolla",
+  "color": "Blanco",
+  "kilometraje": 15000,
+  "estado": "disponible",
+  "fecha_ingreso": "2025-10-22",
+  "id_concesionario": "1"
+}
+
+### Obtener todos los vehículos
+GET http://localhost:3000/vehicles
+Authorization: Bearer {{token}}
+
+### Obtener un vehículo por ID
+GET http://localhost:3000/vehicles/1
+Authorization: Bearer {{token}}
+
+### Actualizar un vehículo por ID
+PATCH http://localhost:3000/vehicles/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "color": "Negro",
+  "estado": "vendido"
+}
+
+### Eliminar un vehículo por ID
+DELETE http://localhost:3000/vehicles/1
+Authorization: Bearer {{token}}
+
+
+### Crear un nuevo usuario
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "Juan Pérez",
+  "email": "juan@example.com",
+  "password": "123456"
+}
+
+
+### Obtener todos los usuarios
+GET http://localhost:3000/users
+Accept: application/json
+
+### Obtener un usuario por ID
+GET http://localhost:3000/users/1
+Accept: application/json
+
+### Actualizar un usuario por ID
+PATCH http://localhost:3000/users/1
+Content-Type: application/json
+
+{
+  "name": "Juan Actualizado",
+  "email": "juan.actualizado@example.com"
+}
+
+### Eliminar un usuario por ID
+DELETE http://localhost:3000/users/1
+Accept: application/json
+
+
+### Crear una nueva venta
+POST http://localhost:3000/sales
+Content-Type: application/json
+
+{
+  "id_cliente": 1,
+  "id_concesionario": 1,
+  "numero_factura": "FAC-001",
+  "fecha_venta": "2025-10-24",
+  "id_empleado": 2,
+  "metodo_pago": "efectivo"
+}
+
+### Obtener todas las ventas
+GET http://localhost:3000/sales
+Accept: application/json
+
+### Obtener una venta por ID
+GET http://localhost:3000/sales/1
+Accept: application/json
+
+### Actualizar una venta por ID
+PATCH http://localhost:3000/sales/1
+Content-Type: application/json
+
+{
+  "metodo_pago": "tarjeta",
+  "numero_factura": "FAC-001-UPDATED"
+}
+
+### Eliminar una venta por ID
+DELETE http://localhost:3000/sales/1
+Accept: application/json
+
+
+### Crear un nuevo pago
+POST http://localhost:3000/payments
+Content-Type: application/json
+
+{
+  "id_venta": 1,
+  "monto": 1500.00,
+  "fecha_pago": "2025-10-24",
+  "metodo_pago": "tarjeta"
+}
+
+### Obtener todos los pagos
+GET http://localhost:3000/payments
+Accept: application/json
+
+### Obtener un pago por ID
+GET http://localhost:3000/payments/1
+Accept: application/json
+
+### Actualizar un pago por ID
+PATCH http://localhost:3000/payments/1
+Content-Type: application/json
+
+{
+  "monto": 1600.00,
+  "metodo_pago": "efectivo"
+}
+
+### Eliminar un pago por ID
+DELETE http://localhost:3000/payments/1
+Accept: application/json
+
+
