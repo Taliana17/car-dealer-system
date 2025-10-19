@@ -10,19 +10,17 @@ import { Venta } from '../../venta/entities/venta.entity';
 import { Vehiculo } from '../../vehiculo/entities/vehiculo.entity';
 
 @Entity()
-@Unique(['venta', 'vehiculo']) // evita duplicar un mismo vehículo en una venta
+@Unique(['venta', 'vehiculo'])
 export class DetalleVenta {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Venta, (venta) => venta.detalles, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(() => Venta, (venta) => venta.detalles, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'id_venta' })
   venta: Venta;
 
   @ManyToOne(() => Vehiculo, (vehiculo) => vehiculo.detalles, {
-    eager: true, // carga automática del vehículo
+    eager: true,
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'id_vehiculo' })

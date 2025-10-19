@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ConcesionarioService } from './concesionario.service';
-import { ConcesionarioController } from './concesionario.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Concesionario } from './entities/concesionario.entity';
 
 @Module({
-  controllers: [ConcesionarioController],
-  providers: [ConcesionarioService],
+  imports: [TypeOrmModule.forFeature([Concesionario])],
+  controllers: [/* ConcesionarioController */],
+  providers: [/* ConcesionarioService */],
+  exports: [TypeOrmModule],
 })
 export class ConcesionarioModule {}

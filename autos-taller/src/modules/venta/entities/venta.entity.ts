@@ -1,5 +1,11 @@
-// modules/venta/entities/venta.entity.ts
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+} from 'typeorm';
 import { Cliente } from '../../cliente/entities/cliente.entity';
 import { Concesionario } from '../../concesionario/entities/concesionario.entity';
 import { Empleado } from '../../empleado/entities/empleado.entity';
@@ -8,19 +14,39 @@ import { MetodoPago } from '../../../enums/enums';
 
 @Entity()
 export class Venta {
-  @PrimaryGeneratedColumn() id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @ManyToOne(() => Cliente, c => c.ventas, { nullable: false }) cliente: Cliente;
-  @ManyToOne(() => Concesionario, c => c.ventas, { nullable: false }) concesionario: Concesionario;
-  @ManyToOne(() => Empleado, e => e.ventas, { nullable: false }) empleado: Empleado;
+  @ManyToOne(() => Cliente, (c) => c.ventas, { nullable: false })
+  @JoinColumn({ name: 'id_cliente' })
+  cliente: Cliente;
 
-  @Column({ unique: true }) numero_factura: string;
-  @Column({ type: 'date', default: () => 'CURRENT_DATE' }) fecha_venta: string;
-  @Column({ type: 'enum', enum: MetodoPago }) metodo_pago: MetodoPago;
+  @ManyToOne(() => Concesionario, (c) => c.ventas, { nullable: false })
+  @JoinColumn({ name: 'id_concesionario' })
+  concesionario: Concesionario;
 
-  @Column('decimal', { precision: 5, scale: 2, default: 0 }) descuento_porcentaje: string;
-  @Column('decimal', { precision: 12, scale: 2, default: 0 }) impuestos: string;
-  @Column({ type: 'text', nullable: true }) notas?: string;
+  @ManyToOne(() => Empleado, (e) => e.ventas, { nullable: false })
+  @JoinColumn({ name: 'id_empleado' })
+  empleado: Empleado;
 
-  @OneToMany(() => DetalleVenta, d => d.venta, { cascade: true }) detalles: DetalleVenta[];
+  @Column({ unique: true })
+  numero_factura: string;
+
+  @Column({ type: 'date', default: () => 'CURRENT_DATE' })
+  fecha_venta: Date;
+
+  @Column({ type: 'enum', enum: MetodoPago })
+  metodo_pago: MetodoPago;
+
+  @Column('decimal', { precision: 5, scale: 2, default: 0 })
+  descuento_porcentaje: number;
+
+  @Column('decimal', { precision: 12, scale: 2, default: 0 })
+  impuestos: number;
+
+  @Column({ type: 'text', nullable: true })
+  notas?: string;
+
+  @OneToMany(() => DetalleVenta, (d) => d.venta, { cascade: true })
+  detalles: DetalleVenta[];
 }
