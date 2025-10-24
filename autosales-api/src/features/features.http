@@ -1,0 +1,24 @@
+### Crear una característica de vehículo
+POST http://localhost:3000/features
+Content-Type: application/json
+
+{
+    "name": "Sensor de reversa"
+}
+
+### Obtener todas las características
+GET http://localhost:3000/features
+
+### Obtener una característica por ID
+GET http://localhost:3000/features/
+
+### Actualizar una característica por ID
+PATCH http://localhost:3000/features/
+Content-Type: application/json
+
+{
+    "name": "Bluetooth"
+}
+
+### Eliminar una característica por ID
+DELETE http://localhost:3000/features/

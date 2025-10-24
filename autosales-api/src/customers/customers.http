@@ -1,0 +1,29 @@
+### Crear un cliente 
+POST http://localhost:3000/customers
+Content-Type: application/json
+
+{
+    "firstName": "Carlos",
+    "lastName": "Gomez",
+    "email": "carlos.gomez@example.com",
+    "phone": "123456789",
+    "documentId": "123456789"
+}
+
+### Obtener todos los clientes
+GET http://localhost:3000/customers
+
+### Obtener un cliente por ID
+GET http://localhost:3000/customers/4d1b6c8e-f690-4c2d-88cf-8f0d906e9480
+
+### Actualizar un cliente por ID
+PATCH http://localhost:3000/customers/
+Content-Type: application/json
+
+{
+    "email": "carlos.gomez.updated@example.com",
+    "phone": "3109876543"
+}
+
+### Eliminar un cliente por ID
+DELETE http://localhost:3000/customers/
