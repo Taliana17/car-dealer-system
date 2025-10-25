@@ -1,0 +1,24 @@
+### Crear una categoría de vehículo
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+  "name": "SUV"
+}
+
+### Obtener todas las categorías de vehículos
+GET http://localhost:3000/categories
+
+### Obtener una categoría específica por ID
+GET http://localhost:3000/categories/
+
+### Actualizar una categoría de vehículo por ID
+PATCH http://localhost:3000/categories/
+Content-Type: application/json
+
+{
+  "name": "Camioneta"
+}
+
+### Eliminar una categoría de vehículo por ID
+DELETE http://localhost:3000/categories/
