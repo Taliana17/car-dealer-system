@@ -1,0 +1,31 @@
+### Crear un nuevo pago
+POST http://localhost:3000/payments
+Content-Type: application/json
+
+{
+  "id_venta": 1,
+  "monto": 1500.00,
+  "fecha_pago": "2025-10-24",
+  "metodo_pago": "tarjeta"
+}
+
+### Obtener todos los pagos
+GET http://localhost:3000/payments
+Accept: application/json
+
+### Obtener un pago por ID
+GET http://localhost:3000/payments/1
+Accept: application/json
+
+### Actualizar un pago por ID
+PATCH http://localhost:3000/payments/1
+Content-Type: application/json
+
+{
+  "monto": 1600.00,
+  "metodo_pago": "efectivo"
+}
+
+### Eliminar un pago por ID
+DELETE http://localhost:3000/payments/1
+Accept: application/json
