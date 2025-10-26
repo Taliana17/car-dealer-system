@@ -1,98 +1,282 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Sistema de Venta de Autos — API REST (NestJS + PostgreSQL)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este proyecto implementa una **API RESTful** para la gestión completa de un sistema de **venta de automóviles**, utilizando **Node.js con NestJS** como framework backend y **PostgreSQL** como sistema de gestión de base de datos relacional.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+El sistema permite administrar vehículos, clientes, ventas, pagos y usuarios autenticados mediante **JWT**, garantizando seguridad y organización en la gestión de datos.
 
-## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tecnologías Utilizadas
 
-## Project setup
+* **Node.js** — Entorno de ejecución JavaScript
+* **NestJS** — Framework modular y escalable
+* **PostgreSQL** — Sistema gestor de bases de datos relacional
+* **TypeORM** — ORM para modelar y manipular datos
+* **JWT (JSON Web Tokens)** — Autenticación y autorización
+* **bcrypt** — Encriptación segura de contraseñas
+* **dotenv** — Manejo de variables de entorno
 
-```bash
-$ npm install
+## Instalación y Configuración
+
+1. **Clonar el repositorio:**
+
+   ```bash
+   git clone https://github.com/tu-usuario/venta-autos.git
+   cd venta-autos
+   ```
+
+2. **Instalar dependencias:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configurar variables de entorno:**
+   Crea un archivo `.env` en la raíz del proyecto con la siguiente estructura:
+
+   ```env
+   DATABASE_HOST=localhost
+   DATABASE_PORT=5432
+   DATABASE_USER=postgres
+   DATABASE_PASSWORD=tu_contraseña
+   DATABASE_NAME=autosales_db
+   JWT_SECRET=clave_super_segura
+   PORT=3000
+   ```
+
+4. **Ejecutar la aplicación:**
+
+   ```bash
+   npm run start:dev
+   ```
+
+## Estructura del Proyecto
+
+```
+src/
+├── auth/               # Módulo de autenticación (JWT)
+├── users/              # Usuarios del sistema
+├── customers/          # Clientes
+├── categories/         # Categorías de vehículos
+├── features/           # Características de vehículos
+├── vehicles/           # Vehículos
+├── sales/              # Ventas
+├── payments/           # Pagos
+├── vehicle-features/   # Relación entre vehículos y características
+├── database/           # Configuración TypeORM + PostgreSQL
+├── app.module.ts
+└── main.ts
 ```
 
-## Compile and run the project
+## Entidades y Atributos
 
-```bash
-# development
-$ npm run start
+### `users`
 
-# watch mode
-$ npm run start:dev
+| Campo    | Tipo      | Descripción                             |
+| -------- | --------- | --------------------------------------- |
+| id       | `uuid`    | Identificador único                     |
+| name     | `varchar` | Nombre del usuario                      |
+| password | `varchar` | Contraseña encriptada                   |
+| role     | `varchar` | Rol del usuario (admin, vendedor, etc.) |
+| email    | `varchar` | Correo electrónico                      |
 
-# production mode
-$ npm run start:prod
+
+### `customers`
+
+| Campo       | Tipo      | Descripción            |
+| ----------- | --------- | ---------------------- |
+| id          | `uuid`    | Identificador único    |
+| firstName   | `varchar` | Nombre                 |
+| lastName    | `varchar` | Apellido               |
+| document_id | `varchar` | Documento de identidad |
+| phone       | `varchar` | Teléfono               |
+| email       | `varchar` | Correo electrónico     |
+
+
+### `categories`
+
+| Campo | Tipo      | Descripción                                       |
+| ----- | --------- | ------------------------------------------------- |
+| id    | `uuid`    | Identificador único                               |
+| name  | `varchar` | Nombre de la categoría (SUV, sedán, pickup, etc.) |
+
+
+### `vehicles`
+
+| Campo       | Tipo            | Descripción                         |
+| ----------- | --------------- | ----------------------------------- |
+| id          | `uuid`          | Identificador único                 |
+| vin         | `varchar`       | Número de serie del vehículo        |
+| brand       | `varchar`       | Marca                               |
+| model       | `varchar`       | Modelo                              |
+| year        | `integer`       | Año de fabricación                  |
+| price       | `numeric(12,2)` | Precio                              |
+| color       | `varchar`       | Color                               |
+| category_id | `uuid (FK)`     | Categoría del vehículo              |
+| customer_id | `uuid (FK)`     | Cliente que lo adquirió (si aplica) |
+
+
+### `features`
+
+| Campo | Tipo      | Descripción                                                        |
+| ----- | --------- | ------------------------------------------------------------------ |
+| id    | `uuid`    | Identificador único                                                |
+| name  | `varchar` | Nombre de la característica (Ej: “Asientos de cuero”, “GPS”, etc.) |
+
+
+### `vehicle_features`
+
+| Campo      | Tipo        | Descripción             |
+| ---------- | ----------- | ----------------------- |
+| id         | `uuid`      | Identificador único     |
+| vehicle_id | `uuid (FK)` | Vehículo asociado       |
+| feature_id | `uuid (FK)` | Característica asociada |
+
+
+### `sales`
+
+| Campo       | Tipo            | Descripción         |
+| ----------- | --------------- | ------------------- |
+| id          | `uuid`          | Identificador único |
+| date        | `timestamp`     | Fecha de la venta   |
+| total       | `numeric(12,2)` | Monto total         |
+| notes       | `varchar`       | Observaciones       |
+| customer_id | `uuid (FK)`     | Cliente comprador   |
+| vehicle_id  | `uuid (FK)`     | Vehículo vendido    |
+
+### `payments`
+
+| Campo   | Tipo            | Descripción                                             |
+| ------- | --------------- | ------------------------------------------------------- |
+| id      | `uuid`          | Identificador único                                     |
+| amount  | `numeric(12,2)` | Valor del pago                                          |
+| method  | `varchar`       | Método de pago (efectivo, tarjeta, transferencia, etc.) |
+| date    | `timestamp`     | Fecha del pago                                          |
+| sale_id | `uuid (FK)`     | Venta relacionada                                       |
+
+
+## Autenticación con JWT
+
+El sistema utiliza **JSON Web Tokens (JWT)** para la autenticación de usuarios y la protección de endpoints.
+Cada token se genera al iniciar sesión y debe enviarse en el encabezado HTTP de las solicitudes protegidas:
+
+```
+Authorization: Bearer <token>
 ```
 
-## Run tests
+## Ejemplos de Endpoints
 
-```bash
-# unit tests
-$ npm run test
+### Registrar un usuario
 
-# e2e tests
-$ npm run test:e2e
+**POST** `/auth/register`
 
-# test coverage
-$ npm run test:cov
+```json
+{
+  "name": "Admin",
+  "email": "admin@autosales.com",
+  "password": "admin123",
+  "role": "admin"
+}
 ```
 
-## Deployment
+**Respuesta**
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```json
+{
+  "message": "Usuario registrado exitosamente"
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Iniciar sesión
 
-## Resources
+**POST** `/auth/login`
 
-Check out a few resources that may come in handy when working with NestJS:
+```json
+{
+  "email": "admin@autosales.com",
+  "password": "admin123"
+}
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+**Respuesta**
 
-## Support
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR..."
+}
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Crear un vehículo
 
-## Stay in touch
+**POST** `/vehicles`
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```json
+{
+  "vin": "2HGFC2F59JH012345",
+  "brand": "Toyota",
+  "model": "Corolla",
+  "year": 2022,
+  "price": 95000,
+  "color": "Gris",
+  "category_id": "uuid-categoria"
+}
+```
 
-## License
+**Respuesta**
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```json
+{
+  "id": "uuid-del-vehiculo",
+  "brand": "Toyota",
+  "model": "Corolla",
+  "price": 95000
+}
+```
+
+### Registrar una venta
+
+**POST** `/sales`
+
+```json
+{
+  "date": "2025-10-23T10:30:00Z",
+  "total": 98000,
+  "notes": "Venta financiada a 6 meses",
+  "customer_id": "uuid-cliente",
+  "vehicle_id": "uuid-vehiculo"
+}
+```
+
+**Respuesta**
+
+```json
+{
+  "id": "uuid-venta",
+  "total": 98000,
+  "status": "success"
+}
+```
+
+### Registrar un pago
+
+**POST** `/payments`
+
+```json
+{
+  "amount": 15000,
+  "method": "tarjeta",
+  "sale_id": "uuid-venta"
+}
+```
+
+**Respuesta**
+
+```json
+{
+  "message": "Pago registrado correctamente",
+  "payment_id": "uuid-pago"
+}
+```
+
+## Licencia
+Este proyecto está bajo la licencia **MIT**.
+Se permite su uso y modificación con fines académicos o de desarrollo libre.
